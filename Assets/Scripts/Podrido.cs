@@ -24,7 +24,7 @@ public class Podrido : MonoBehaviour
 
 	private GameObject barravida;
 
-	public float atackRate = 0.5F;
+	public float atackRate = 0.8F;
 	private float nextAtack = 0.0F;
 
 	// Use this for initialization
@@ -116,7 +116,9 @@ public class Podrido : MonoBehaviour
 			{
 				nextAtack = Time.time + atackRate;
 				barravida.SendMessage("TakeDamage", 5);
-			}
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.Play();
+            }
 		}
 		else
 		{
