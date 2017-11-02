@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 27b1fb522b08c6046860f79667476f65
-timeCreated: 1507880914
+timeCreated: 1509159708
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,7 @@ TextureImporter:
     21300002: caminata_1
     21300004: caminata_2
     21300006: caminata_3
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -61,6 +62,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -69,6 +71,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -77,6 +80,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -95,7 +99,7 @@ TextureImporter:
         width: 57
         height: 74
       alignment: 9
-      pivot: {x: 0.8454597, y: 0.0033471263}
+      pivot: {x: 0.7622617, y: 0.004262589}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -109,7 +113,7 @@ TextureImporter:
         width: 57
         height: 73
       alignment: 9
-      pivot: {x: 0.79983306, y: 0.0016964821}
+      pivot: {x: 0.7439716, y: 0.0016964821}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -123,7 +127,7 @@ TextureImporter:
         width: 57
         height: 72
       alignment: 9
-      pivot: {x: 0.836769, y: -0.000000013245477}
+      pivot: {x: 0.7309886, y: 0.0028228099}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -137,7 +141,7 @@ TextureImporter:
         width: 57
         height: 73
       alignment: 9
-      pivot: {x: 0.81286913, y: 0.0016964821}
+      pivot: {x: 0.75581896, y: 0.004480597}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
