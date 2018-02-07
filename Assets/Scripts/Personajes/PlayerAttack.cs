@@ -52,7 +52,7 @@ public class PlayerAttack : MonoBehaviour {
 
 	void Update()
 	{
-		if(Input.GetKeyDown("z") && !attacking)
+		if(Input.GetKeyDown("z") && !attacking || Input.GetButtonDown("Topetazo") && !attacking)
 		{
 			attacking = true;
 			attackTimer = attackCd;
@@ -63,7 +63,7 @@ public class PlayerAttack : MonoBehaviour {
 
 
 
-		if (Input.GetKeyDown("x") && !ladrido && !trigger)
+		if (Input.GetKeyDown("x") && !ladrido && !trigger || Input.GetButtonDown("Ladrido") && !ladrido && !trigger)
 		{
 			ladrido = true;
 			attackTimer = attackCd;
@@ -76,7 +76,8 @@ public class PlayerAttack : MonoBehaviour {
 		}
 
 
-		else if (Input.GetKeyDown("x") && trigger){
+		else if (Input.GetKeyDown("x") && trigger || Input.GetButtonDown("Ladrido") && !trigger)
+        {
 			ladrido = true;
 			attacking = true;
 			attackTimer = attackCd;

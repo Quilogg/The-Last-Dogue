@@ -69,7 +69,7 @@ public class Rugbier : MonoBehaviour {
             gameObject.GetComponent<Rugbier>().enabled = false;
         }
 
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown("x") || Input.GetButtonDown("Ladrido"))
         {
             gameObject.AddComponent<Rugbier2>();
             Destroy(GetComponent("Rugbier"));

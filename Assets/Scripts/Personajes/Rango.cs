@@ -63,7 +63,7 @@ public class Rango : MonoBehaviour
             gameObject.GetComponent<Rango>().enabled = false;
         }
 
-        if (Input.GetKeyDown("x")){
+        if (Input.GetKeyDown("x") || Input.GetButtonDown("Ladrido")){
 
             GetComponent<BoxCollider2D>().size = new Vector2(8f, 2.3f);
             GetComponent<BoxCollider2D>().offset = new Vector2(-4.5f, 0.82f);

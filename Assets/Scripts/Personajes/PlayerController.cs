@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
 	public bool trepando;
 
+    private bool J2;
+
    void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
         barravida = GameObject.FindGameObjectWithTag("Vida");
 
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
@@ -60,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded && transform.position.y > -0.3f)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded && transform.position.y > -0.3f || Input.GetButtonDown("J_Jump") && grounded && transform.position.y > -0.3f)
         {
             jump = true;
 
@@ -70,7 +74,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<BoxCollider2D>().offset = new Vector2(0.07f, 0.4666667f);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) | Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftControl) | Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("Correr"))
         {
             maxSpeed = 5f;
             speed = 125f;
@@ -80,13 +84,13 @@ public class PlayerController : MonoBehaviour
             GetComponent<BoxCollider2D>().size = new Vector2(1.06f, 0.9333333f);
             GetComponent<BoxCollider2D>().offset = new Vector2(0.07f, 0.4666667f);
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl) | Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftControl) | Input.GetKeyUp(KeyCode.LeftShift) || Input.GetButtonUp("Correr"))
         {
             maxSpeed = 3f;
             speed = 75f;
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) && grounded)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && grounded || Input.GetButtonDown("Agacharse"))
         {
             anim.SetBool("Agacharse", true);
 
@@ -99,7 +103,7 @@ public class PlayerController : MonoBehaviour
             speed = 40f;
         }
 
-        if (Input.GetKeyUp(KeyCode.DownArrow) && grounded)
+        if (Input.GetKeyUp(KeyCode.DownArrow) && grounded || Input.GetButtonUp("Agacharse"))
         {
             anim.SetBool("Agacharse", false);
 
@@ -131,13 +135,45 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //JOYSTICK
+        if (Input.GetAxisRaw("JVertical") !=0)
+        {
+            if (J2 == true)
+            {
+                trepando = true;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -1f);
+                anim.SetBool("Trepar", true);
+                anim.SetBool("Quieto", false);
+                GetComponent<Rigidbody2D>().gravityScale = 0f;
+            }
+            
+        }
+        if (Input.GetAxisRaw("JVertical") == 0 && grounded)
+        {
+            if (J2 == false)
+            {
+                trepando = false;
+            }
+        }
 
-        else if (Input.GetKey(KeyCode.LeftArrow) && trepando )
-		{
+
+        else if (Input.GetKey(KeyCode.RightArrow) && trepando)
+        {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 0f);
             anim.SetBool("Costado", true);
-			anim.SetBool("Trepar", true);
-			anim.SetBool("Quieto", false);
+            anim.SetBool("Trepar", true);
+            anim.SetBool("Quieto", false);
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        }
+
+
+        else if (Input.GetKey(KeyCode.LeftArrow) && trepando)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 0f);
+            anim.SetBool("Costado", true);
+            anim.SetBool("Trepar", true);
+            anim.SetBool("Quieto", false);
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 
 
@@ -167,10 +203,15 @@ public class PlayerController : MonoBehaviour
         }
 
         float h = Input.GetAxis("Horizontal");
+        float J = Input.GetAxis("JHorizontal");
 
         if (!movement) h = 0;
+        if (!movement) J = 0;
+
 
         rb2d.AddForce(Vector2.right * speed * h);
+        rb2d.AddForce(Vector2.right * speed * J);
+
 
 
         float limitedSpeed = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
@@ -194,6 +235,25 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             
+
+
+            jump = false;
+        }
+
+        if (J > 0.1f)
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+
+        if (J < -0.1f)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+
+        if (jump)
+        {
+            rb2d.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+
 
 
             jump = false;
@@ -264,7 +324,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
 
-        if (Input.GetKey(KeyCode.UpArrow) && other.tag == "Enredadera")
+        if (Input.GetKey(KeyCode.UpArrow) && other.tag == "Enredadera" || Input.GetButtonDown("Trepar") && other.tag == "Enredadera")
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 1f);
             anim.SetBool("Trepar", true);
@@ -280,7 +340,7 @@ public class PlayerController : MonoBehaviour
             audio.Play();
 
         }
-        else if (Input.GetKeyUp(KeyCode.UpArrow) && other.tag == "Enredadera")
+        else if (Input.GetKeyUp(KeyCode.UpArrow) && other.tag == "Enredadera" || Input.GetButtonUp("Trepar") && other.tag == "Enredadera")
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             anim.SetBool("Trepar", true);

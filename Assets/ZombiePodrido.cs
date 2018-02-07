@@ -101,7 +101,7 @@ public class ZombiePodrido : MonoBehaviour {
                 audio.Play();
             }
 
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown("Ladrido"))
             {
                 curHealth -= 50;
             }

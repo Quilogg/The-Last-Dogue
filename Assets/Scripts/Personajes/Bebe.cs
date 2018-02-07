@@ -70,7 +70,7 @@ public class Bebe : MonoBehaviour
             gameObject.GetComponent<Bebe>().enabled = false;
         }
 
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown("x") || Input.GetButtonDown("Ladrido"))
         {
 
             GetComponent<BoxCollider2D>().size = new Vector2(0f, 0f);
