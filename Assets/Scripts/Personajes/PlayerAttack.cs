@@ -16,8 +16,9 @@ public class PlayerAttack : MonoBehaviour {
 	private GameObject Player;
 
 	public AudioClip Ladrido;
+    public AudioClip Morder;
 
-	float timeR = 0.4f;
+    float timeR = 0.4f;
 
 	AudioSource fuenteAudio;
 
@@ -37,28 +38,19 @@ public class PlayerAttack : MonoBehaviour {
 	}
 
 
-	/*void OnTriggerStay(Collider2D col){
-		if (col.tag == "Enemy3") {
-			trigger = true;
-		}
-	}
-
-	void OnTriggerExit(Collider2D col){
-		if (col.tag == "Enemy3") {
-			trigger = false;
-		}
-	}*/
-
-
 	void Update()
 	{
-		if(Input.GetKeyDown("z") && !attacking || Input.GetButtonDown("Topetazo") && !attacking)
-		{
-			attacking = true;
-			attackTimer = attackCd;
+        if (Input.GetKeyDown("z") && !attacking || Input.GetButtonDown("Topetazo") && !attacking)
+        {
+            attacking = true;
+            attackTimer = attackCd;
 
-			Invoke("ActivateNow", timeR);
-		}
+            fuenteAudio.clip = Morder;
+
+            fuenteAudio.Play();
+
+            Invoke("ActivateNow", timeR);
+        }
 			
 
 
