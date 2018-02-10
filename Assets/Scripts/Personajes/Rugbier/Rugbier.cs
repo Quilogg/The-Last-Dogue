@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Rugbier : MonoBehaviour {
 
@@ -69,7 +70,7 @@ public class Rugbier : MonoBehaviour {
             gameObject.GetComponent<Rugbier>().enabled = false;
         }
 
-        if (Input.GetKeyDown("x") || Input.GetButtonDown("Ladrido"))
+        if (Input.GetKeyDown("x"))
         {
             gameObject.AddComponent<Rugbier2>();
             Destroy(GetComponent("Rugbier"));
@@ -131,13 +132,73 @@ public class Rugbier : MonoBehaviour {
             caminar.SetBool("DentrodelRango", false);
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
 
-            if (Time.time > nextAtack)
+			if (Time.time > nextAtack && GameControl.nivel == 0)
             {
                 nextAtack = Time.time + atackRate;
                 barravida.SendMessage("TakeDamage", 10);
                 AudioSource audio = GetComponent<AudioSource>();
                 audio.Play();
+
+				Analytics.CustomEvent("Damage", new Dictionary<string, object>
+					{
+						{"nivel", GameControl.nivel},
+						{"posicion_level_1", Player.transform.position.x},
+						{"tipo", this.gameObject},
+
+					});
+
             }
+
+			if (Time.time > nextAtack && GameControl.nivel == 1)
+			{
+				nextAtack = Time.time + atackRate;
+				barravida.SendMessage("TakeDamage", 10);
+				AudioSource audio = GetComponent<AudioSource>();
+				audio.Play();
+
+				Analytics.CustomEvent("Damage", new Dictionary<string, object>
+					{
+						{"nivel", GameControl.nivel},
+						{"posicion_level_2", Player.transform.position.x},
+						{"tipo", this.gameObject},
+
+					});
+
+			}
+
+			if (Time.time > nextAtack && GameControl.nivel == 2)
+			{
+				nextAtack = Time.time + atackRate;
+				barravida.SendMessage("TakeDamage", 10);
+				AudioSource audio = GetComponent<AudioSource>();
+				audio.Play();
+
+				Analytics.CustomEvent("Damage", new Dictionary<string, object>
+					{
+						{"nivel", GameControl.nivel},
+						{"posicion_level_3", Player.transform.position.x},
+						{"tipo", this.gameObject},
+
+					});
+
+			}
+
+			if (Time.time > nextAtack && GameControl.nivel == 3)
+			{
+				nextAtack = Time.time + atackRate;
+				barravida.SendMessage("TakeDamage", 10);
+				AudioSource audio = GetComponent<AudioSource>();
+				audio.Play();
+
+				Analytics.CustomEvent("Damage", new Dictionary<string, object>
+					{
+						{"nivel", GameControl.nivel},
+						{"posicion_level_4", Player.transform.position.x},
+						{"tipo", this.gameObject},
+
+					});
+
+			}
         }
         else
         {
