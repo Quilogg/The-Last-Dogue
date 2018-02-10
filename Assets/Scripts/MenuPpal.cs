@@ -4,18 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Analytics;
 
-
-
 	public class MenuPpal : MonoBehaviour
 {
 	public GameObject OcultarMouse;
     public GameObject Player;
     private SpriteRenderer spr;
 
-
+    
     void Start()
     {
-
+        
         print(GameControl.check);
         print(GameControl.nivel);
 
@@ -26,7 +24,7 @@ using UnityEngine.Analytics;
 
         
     }
-
+    
     public void BtnNuevoJuego(string nivelNuevoJuego)
     {
 		Analytics.CustomEvent ("NuevoJuego", new Dictionary<string, object> {

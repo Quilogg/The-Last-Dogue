@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
 			
 			
 
-		if (Input.GetKey(KeyCode.DownArrow) && trepando)
+		if (Input.GetKey(KeyCode.DownArrow) && trepando || Input.GetAxis("JVertical") < 0 && trepando)
 		{
 			GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -1f);
 			anim.SetBool("Trepar", true);
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 
-        else if (Input.GetKey(KeyCode.RightArrow) && trepando )
+        else if (Input.GetKey(KeyCode.RightArrow) && trepando)
 		{
             GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 0f);
             anim.SetBool("Costado", true);
@@ -135,28 +135,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        //JOYSTICK
-        if (Input.GetAxisRaw("JVertical") !=0)
-        {
-            if (J2 == true)
-            {
-                trepando = true;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -1f);
-                anim.SetBool("Trepar", true);
-                anim.SetBool("Quieto", false);
-                GetComponent<Rigidbody2D>().gravityScale = 0f;
-            }
-            
-        }
-        if (Input.GetAxisRaw("JVertical") == 0 && grounded)
-        {
-            if (J2 == false)
-            {
-                trepando = false;
-            }
-        }
-
-
+       
         else if (Input.GetKey(KeyCode.RightArrow) && trepando)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 0f);
@@ -324,7 +303,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
 
-        if (Input.GetKey(KeyCode.UpArrow) && other.tag == "Enredadera" || Input.GetButtonDown("Trepar") && other.tag == "Enredadera")
+        if (Input.GetKey(KeyCode.UpArrow) && other.tag == "Enredadera" || Input.GetAxis("JVertical") > 0.19 && other.tag == "Enredadera")
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 1f);
             anim.SetBool("Trepar", true);
@@ -340,7 +319,7 @@ public class PlayerController : MonoBehaviour
             audio.Play();
 
         }
-        else if (Input.GetKeyUp(KeyCode.UpArrow) && other.tag == "Enredadera" || Input.GetButtonUp("Trepar") && other.tag == "Enredadera")
+        else if (Input.GetKeyUp(KeyCode.UpArrow) && other.tag == "Enredadera" || Input.GetAxis("JVertical") >= 0.19 && other.tag == "Enredadera")
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             anim.SetBool("Trepar", true);
@@ -348,7 +327,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Costado", false);
             GetComponent<Rigidbody2D>().gravityScale = 0f;
         }
-        else if (Input.GetKeyUp(KeyCode.DownArrow) && other.tag == "Enredadera" && trepando)
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && other.tag == "Enredadera" && trepando || Input.GetAxis("JVertical") <= 0.19 && trepando)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             anim.SetBool("Trepar", true);
