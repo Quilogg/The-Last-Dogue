@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class GameOver3 : MonoBehaviour
 {
 
     private GameObject barravida;
     private GameObject Player;
+    private SpriteRenderer spr;
     private GameObject Enemy;
     private GameObject Enemy2;
     private GameObject Enemy3;
@@ -32,6 +34,8 @@ public class GameOver3 : MonoBehaviour
     {
         barravida = GameObject.Find("barravida");
         Player = GameObject.FindGameObjectWithTag("Player");
+        spr = Player.GetComponent<SpriteRenderer>();
+
         Enemy = GameObject.FindGameObjectWithTag("Enemy");
         Enemy2 = GameObject.FindGameObjectWithTag("Enemy2");
         Enemy3 = GameObject.FindGameObjectWithTag("Enemy3");
@@ -47,8 +51,18 @@ public class GameOver3 : MonoBehaviour
         playerattack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
         bebe = GameObject.Find("Bebe1").GetComponent<Bebe>();
 
+		GameControl.veces_morir++;
+		Analytics.CustomEvent("muerte", new Dictionary<string, object>
+			{
+				{"nivel", GameControl.nivel},
+				{"posicion_level_3", Player.transform.position.x},
+				{"cantidad", GameControl.veces_morir},
+
+			});
 
         barravida.SetActive(true);
+
+
     }
 
     // Update is called once per frame
@@ -56,7 +70,7 @@ public class GameOver3 : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-
+            spr.color = Color.white;
 
             gameObject.SetActive(false);
             Time.timeScale = 1f;

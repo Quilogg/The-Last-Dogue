@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class PausarJuego : MonoBehaviour {
 
@@ -16,7 +17,7 @@ public class PausarJuego : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Pausa")) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             Pausar();
         }
     }
@@ -41,5 +42,11 @@ public class PausarJuego : MonoBehaviour {
             SceneManager.LoadScene(volverMenuPpal);
 			Destroy(GameObject.FindWithTag("Player"));
 			Destroy(GameObject.Find("OcultarMouse"));
+			GameControl.abandonado++;
+			Analytics.CustomEvent("Abandonar", new Dictionary<string, object>
+			{
+				{"nivel", GameControl.abandonado},
+
+			});
         }
     }

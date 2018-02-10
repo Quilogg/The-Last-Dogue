@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Piston2 : MonoBehaviour {
     private GameObject barravida;
 
     private bool activar = true;
 
+    private GameObject Player;
+
     // Use this for initialization
     void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
 
         barravida = GameObject.Find("barravida");
     }
@@ -78,7 +82,15 @@ public class Piston2 : MonoBehaviour {
         if (coll.gameObject.tag == "Player")
         {
 
-            coll.gameObject.SendMessage("EnemyKnockBack", transform.position.x);
+            barravida.SendMessage("TakeDamage", 15);
+
+            Analytics.CustomEvent("Damage", new Dictionary<string, object>
+				{
+					{"nivel", GameControl.nivel},
+					{"posicion_level", Player.transform.position.x},
+					{"tipo", this.gameObject},
+
+				});
 
             GetComponent<BoxCollider2D>().enabled = false;
 
@@ -90,7 +102,15 @@ public class Piston2 : MonoBehaviour {
         if (coll.gameObject.tag == "Player")
         {
 
-            coll.gameObject.SendMessage("EnemyKnockBack", transform.position.x);
+            barravida.SendMessage("TakeDamage", 15);
+
+            Analytics.CustomEvent("Damage", new Dictionary<string, object>
+				{
+					{"nivel", GameControl.nivel},
+					{"posicion_level", Player.transform.position.x},
+					{"tipo", this.gameObject},
+
+				});
 
 
             Invoke("Cerrar3", 1f);

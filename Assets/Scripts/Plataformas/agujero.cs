@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class agujero : MonoBehaviour
 {
+    private GameObject Player;
+
     private GameObject saltarno;
     private GameObject enemy;
     private GameObject enemy2;
@@ -16,6 +19,7 @@ public class agujero : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
 
         barravida = GameObject.Find("barravida");
         saltarno = GameObject.FindGameObjectWithTag("Tuto");
@@ -37,6 +41,14 @@ public class agujero : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             barravida.SendMessage("TakeDamage", 100);
+
+			Analytics.CustomEvent("Damage", new Dictionary<string, object>
+				{
+					{"nivel", GameControl.nivel},
+					{"posicion_level", Player.transform.position.x},
+					{"tipo", this.gameObject},
+
+				});
             
 
         }

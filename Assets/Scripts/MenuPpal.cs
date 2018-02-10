@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
-public class MenuPpal : MonoBehaviour
+
+
+	public class MenuPpal : MonoBehaviour
 {
 	public GameObject OcultarMouse;
     public GameObject Player;
@@ -26,6 +29,9 @@ public class MenuPpal : MonoBehaviour
 
     public void BtnNuevoJuego(string nivelNuevoJuego)
     {
+		Analytics.CustomEvent ("NuevoJuego", new Dictionary<string, object> {
+			{"nivel", GameControl.nivel}	
+		});
         SceneManager.LoadScene(nivelNuevoJuego);
         Time.timeScale = 1;
 
@@ -34,7 +40,11 @@ public class MenuPpal : MonoBehaviour
 
     public void BtnContinuar()
     {
-
+		GameControl.vez_continuar++;
+		Analytics.CustomEvent ("Continuar", new Dictionary<string, object>{
+				{"vez", GameControl.vez_continuar},
+				{"nivel", GameControl.nivel}
+		});
 
         if (GameControl.nivel <= 0)
         {
@@ -73,6 +83,30 @@ public class MenuPpal : MonoBehaviour
 
     }
 
+	public void BtnCalificar(string escenaCalificar)
+	{
+		SceneManager.LoadScene(escenaCalificar);
+		Time.timeScale = 1;
+        Cursor.visible = true;
+
+
+	}
+
+	public void BtnCreditos(string escenaCreditos)
+	{
+		SceneManager.LoadScene(escenaCreditos);
+		Time.timeScale = 1;
+		GameControl.verCreditos++;
+		Analytics.CustomEvent("VerCreditos", new Dictionary<string, object>
+			{
+				{"ver", GameControl.verCreditos},
+
+			});
+
+
+	}
+
+
     public void BtnMute()
     {
         AudioListener.pause = !AudioListener.pause;
@@ -83,4 +117,64 @@ public class MenuPpal : MonoBehaviour
     {
         Application.Quit();
     }
+
+	public void BtnIraMenu(string VolveraMenu)
+	{
+		SceneManager.LoadScene(VolveraMenu);
+		Time.timeScale = 1;
+	}
+
+	public void BtnMM()
+	{
+		GameControl.muyMalo++;
+		Analytics.CustomEvent("Calificar", new Dictionary<string, object>
+			{
+				{"calificacion", "Muy Malo"},
+				{"nota", 1},
+
+			});
+	}
+
+	public void BtnM()
+	{
+		GameControl.Malo++;
+		Analytics.CustomEvent("Calificacion", new Dictionary<string, object>
+			{
+				{"calificacion", "Malo"},
+				{"nota", 2},
+
+			});
+	}
+
+	public void BtnNor()
+	{
+		GameControl.Normal++;
+		Analytics.CustomEvent("Calificacion", new Dictionary<string, object>
+			{
+				{"calificacion", "Normal"},
+				{"nota", 3},
+
+			});
+	}
+	public void BtnBueno()
+	{
+		GameControl.Bueno++;
+		Analytics.CustomEvent("Calificacion", new Dictionary<string, object>
+			{
+				{"calificacion", "Bueno"},
+				{"nota", 4},
+
+			});
+	}
+	public void BtnMB()
+	{
+		GameControl.muyBueno++;
+		Analytics.CustomEvent("Calificacion", new Dictionary<string, object>
+			{
+				{"calificacion", "Muy Bueno"},
+				{"nota", 5},
+
+			});
+	}
+
 }

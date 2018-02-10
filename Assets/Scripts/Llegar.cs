@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class Llegar : MonoBehaviour {
-
 
 	public string escena;
 
@@ -25,7 +25,16 @@ public class Llegar : MonoBehaviour {
             Destroy(GameObject.FindWithTag("Player"));
 
             SceneManager.LoadScene(escena);
-            GameControl.nivel ++;
+            GameControl.ganar ++;
+            GameControl.nivel++;
+
+
+            Analytics.CustomEvent("Ganar", new Dictionary<string, object>
+				{
+					{"nivel", GameControl.ganar},
+
+				});
+
         }
     }
 }
